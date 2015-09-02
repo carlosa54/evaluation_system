@@ -11,7 +11,7 @@ class CustomUserAdmin(UserAdmin):
     add_form = UserCreationForm
     filter_horizontal = ()
     ordering = ('email', )
-    list_display = ('email', 'first_name', 'last_name')
+    list_display = ('first_name', 'last_name','email')
     list_filter = ('is_staff', 'is_superuser',)
     fieldsets = (
         (None, {'fields': ('email', 'password')}),
@@ -26,7 +26,7 @@ class CustomUserAdmin(UserAdmin):
     )
     add_fieldsets = (
         (None, {
-            'fields': ('username', 'email', 'password1', 'password2')}),
+            'fields': ('username', 'first_name','last_name', 'email', 'password1', 'password2')}),
     )
 
 admin.site.register(User, CustomUserAdmin)

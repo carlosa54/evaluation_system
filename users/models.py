@@ -49,4 +49,7 @@ class User(AbstractBaseUser):
 		if self.is_active and self.is_superuser:
 			return True
 
+	def __unicode__(self):
+		return self.first_name + self.last_name
+
 

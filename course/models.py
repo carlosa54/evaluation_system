@@ -5,11 +5,11 @@ from questions.models import Question
 
 class Group(models.Model):
 	name = models.CharField(max_length=200)
-	student = models.ManyToManyField(User)
+	students = models.ManyToManyField(User, limit_choices_to= {'type':'student'})
 
-	#Method added for dysplaying all students of the group in the admin page ManyToMany 
+	#Method added for displaying all students of the group in the admin page ManyToMany 
 	def student_names(self):
-		return ', '.join([a.student for a in self.admins.all()])
+		return ', '.join([a.first_name for a in self.students.all()])
 	student_names.short_description = "Student names"
 
 class Course(models.Model):
@@ -17,4 +17,5 @@ class Course(models.Model):
 	section = models.CharField(max_length=3)
 	questions = models.ManyToManyField(Question)
 	groups = models.ManyToManyField(Group)
+	students = models.ManyToManyField(User, limit_choices_to = {'type': 'student'}, related_name = 'student')
 	proffesor = models.ForeignKey(User, limit_choices_to= {'type':'proffesor'})
