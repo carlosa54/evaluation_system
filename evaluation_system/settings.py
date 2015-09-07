@@ -60,7 +60,7 @@ ROOT_URLCONF = 'evaluation_system.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -85,7 +85,7 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
-
+#For using the custom user model
 AUTH_USER_MODEL = 'users.User'
 
 
@@ -107,3 +107,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
 STATIC_URL = '/static/'
+if DEBUG:
+    MEDIA_URL = '/media/'
+    STATIC_ROOT = os.path.join(BASE_DIR, "static")
+    STATICFILES_DIRS = (os.path.join(BASE_DIR, "static", "static"), )

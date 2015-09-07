@@ -4,9 +4,8 @@ from course.models import Course, Group
 
 
 class CourseAdmin(admin.ModelAdmin):
-	fieldsets = [
-	(None, {'fields' : ['name', 'groups', 'proffesor']}),
-	]
+	list_display = ('name', 'group_names', 'proffesor')
+	
 
 class GroupAdmin(admin.ModelAdmin):
 	list_display = ('name', 'student_names')

@@ -15,7 +15,14 @@ Including another URLconf
 """
 from django.conf.urls import include, url
 from django.contrib import admin
+from django.conf import settings
+from django.conf.urls.static import static
+from users import views
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
+    url(r'^$', 'users.views.home', name='home')
 ]
+
+if settings.DEBUG:
+	urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

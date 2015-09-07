@@ -4,5 +4,6 @@ from questions.models import Question
 
 class QuestionAdmin(admin.ModelAdmin):
 	list_display = ('question_text', 'score', 'answered_by')
+	fields = ('question_text',)
 
 admin.site.register(Question, QuestionAdmin)

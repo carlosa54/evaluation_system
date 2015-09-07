@@ -7,6 +7,9 @@ class Group(models.Model):
 	name = models.CharField(max_length=200)
 	students = models.ManyToManyField(User, limit_choices_to= {'type':'student'})
 
+	def __unicode__(self):
+		return self.name
+
 	#Method added for displaying all students of the group in the admin page ManyToMany 
 	def student_names(self):
 		return ', '.join([a.first_name for a in self.students.all()])
@@ -19,3 +22,7 @@ class Course(models.Model):
 	groups = models.ManyToManyField(Group)
 	students = models.ManyToManyField(User, limit_choices_to = {'type': 'student'}, related_name = 'student')
 	proffesor = models.ForeignKey(User, limit_choices_to= {'type':'proffesor'})
+
+	def group_names(self):
+		return ', '.join([a.name for a in self.groups.all()])
+	group_names.short_description = "Group names"
