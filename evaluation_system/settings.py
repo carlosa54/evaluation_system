@@ -87,7 +87,8 @@ DATABASES = {
 }
 #For using the custom user model
 AUTH_USER_MODEL = 'users.User'
-
+LOGIN_URL = '/login/'
+LOGIN_REDIRECT_URL = '/'
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/

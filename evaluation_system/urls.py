@@ -21,7 +21,10 @@ from users import views
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^$', 'users.views.home', name='home')
+    url(r'^$', 'users.views.home', name='home'),
+    url(r'^login/$', 'django.contrib.auth.views.login', {'template_name': 'auth/login.html'}, name='login'),
+    url(r'^logout/$', 'django.contrib.auth.views.logout', {'next_page': '/'}, name='logout') ,
+    #TODO Sign Up page
 ]
 
 if settings.DEBUG:
