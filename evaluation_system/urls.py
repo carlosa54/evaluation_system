@@ -17,11 +17,22 @@ from django.conf.urls import include, url
 from django.contrib import admin
 from django.conf import settings
 from django.conf.urls.static import static
-from users import views
+#from users import views
 
 urlpatterns = [
-    url(r'^admin/', include(admin.site.urls)),
-    url(r'^$', 'users.views.home', name='home'),
+    url(
+        '^', 
+        include('django.contrib.auth.urls')
+    ),
+    url(
+        r'^admin/', 
+        include(admin.site.urls)
+    ),
+    url(
+        r'^',
+        include('evaluation_system.users.urls')
+    ),
+    #url(r'^$', 'users.views.home', name='home'),
     url(r'^login/$', 'django.contrib.auth.views.login', {'template_name': 'auth/login.html'}, name='login'),
     url(r'^logout/$', 'django.contrib.auth.views.logout', {'next_page': '/'}, name='logout') ,
     #TODO Sign Up page

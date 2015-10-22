@@ -9,8 +9,17 @@ https://docs.djangoproject.com/en/1.8/howto/deployment/wsgi/
 
 import os
 
-from django.core.wsgi import get_wsgi_application
+ENVIRONMENT = os.getenv('ENVIRONMENT').title()
+
+if ENVIRONMENT == 'STAGING':
+    settings = 'staging'
+elif ENVIRONMENT == 'PRODUCTION':
+    settings = 'production'
+else:
+    settings = 'development'
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "evaluation_system.settings")
+os.environ.setdefault('DJANGO_CONFIGURATION', settings.title())
 
+from configurations.wsgi import get_wsgi_application
 application = get_wsgi_application()

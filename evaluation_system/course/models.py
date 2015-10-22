@@ -1,6 +1,6 @@
 from django.db import models
-from users.models import User
-from questions.models import Question
+from ..users.models import User
+from ..questions.models import Question
 # Create your models here.
 
 class Group(models.Model):

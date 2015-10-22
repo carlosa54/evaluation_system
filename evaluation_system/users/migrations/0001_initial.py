@@ -2,7 +2,6 @@
 from __future__ import unicode_literals
 
 from django.db import models, migrations
-from django.conf import settings
 
 
 class Migration(migrations.Migration):
@@ -24,17 +23,10 @@ class Migration(migrations.Migration):
                 ('email', models.EmailField(unique=True, max_length=254)),
                 ('student_number', models.CharField(max_length=11, unique=True, null=True)),
                 ('is_superuser', models.BooleanField(default=False)),
+                ('is_staff', models.BooleanField(default=False)),
             ],
             options={
                 'abstract': False,
             },
-        ),
-        migrations.CreateModel(
-            name='Group',
-            fields=[
-                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('name', models.CharField(max_length=200)),
-                ('student', models.ManyToManyField(to=settings.AUTH_USER_MODEL)),
-            ],
         ),
     ]

@@ -1,9 +1,16 @@
 from django.shortcuts import render
-from questions.models import Question
-#from django.contrib.auth.decorators import login_required
+from ..questions.models import Question
+from django.views.generic import TemplateView
+from django.contrib.auth import logout, authenticate
 
-# Create your views here.
-#@login_required
+from django.shortcuts import redirect
+from .models import User
+
+
+def user_logout(request):
+    logout(request)
+    return redirect("/")
+
 def home(request):
 	body = "Welcome please register or login"
 	title = "Evaluation System"
