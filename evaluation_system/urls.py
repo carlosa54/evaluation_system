@@ -32,9 +32,18 @@ urlpatterns = [
         r'^',
         include('evaluation_system.users.urls')
     ),
-    #url(r'^$', 'users.views.home', name='home'),
-    url(r'^login/$', 'django.contrib.auth.views.login', {'template_name': 'auth/login.html'}, name='login'),
-    #TODO Sign Up page
+    url(
+        r'^',
+        include('evaluation_system.evaluation.urls')
+    ),
+    url(
+        r'^',
+        include('evaluation_system.course.urls')
+    ),
+    url(
+        r'^',
+        include('evaluation_system.questions.urls')
+    ),
 ]
 
 if settings.DEBUG:

@@ -1,7 +1,7 @@
 from django.db import models
 from djangoyearlessdate.models import YearField
-from ..course.models import Course
 from ..questions.models import Question
+from ..course.models import Course
 # Create your models here.
 class Evaluation(models.Model):
 	academic_year = YearField(default = '2015')

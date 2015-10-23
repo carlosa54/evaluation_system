@@ -12,9 +12,12 @@ def user_logout(request):
     return redirect("/")
 
 def home(request):
+	if request.user.type == 'student':
+		return redirect('/evaluate')
 	body = "Welcome please register or login"
 	title = "Evaluation System"
 	user = request.user
+	print user.type
 	questions = Question.objects.all()
 	if request.user.is_authenticated():
 		body = "Hello %s" %user
