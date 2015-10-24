@@ -5,7 +5,7 @@ from . import views
 urlpatterns = [
 	url(
 		r'^evaluate/$', 
-		views.EvaluateView.as_view(), 
+		views.ProfessorEvaluateView.as_view(), 
 		name='evaluate'
 	),
 ]
