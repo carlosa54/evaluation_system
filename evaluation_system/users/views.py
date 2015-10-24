@@ -12,6 +12,8 @@ def user_logout(request):
     return redirect("/")
 
 def home(request):
+	if not request.user.is_authenticated():
+		return redirect("/login")
 	if request.user.type == 'student':
 		return redirect('/evaluate')
 	body = "Welcome please register or login"
@@ -19,8 +21,7 @@ def home(request):
 	user = request.user
 	print user.type
 	questions = Question.objects.all()
-	if request.user.is_authenticated():
-		body = "Hello %s" %user
+	body = "Hello %s" %user
 	context = {
 		"title": title,
 		"body": body,

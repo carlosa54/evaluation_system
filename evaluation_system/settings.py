@@ -47,6 +47,7 @@ class Common(Configuration):
 
         # Third party
         'django_extensions',
+        'crispy_forms',
 
         #Apps
         'evaluation_system.course',
@@ -142,7 +143,7 @@ class Common(Configuration):
     EMAIL_PORT = values.IntegerValue()
     EMAIL_USE_TLS = values.BooleanValue(False)
 
-    #CRISPY_TEMPLATE_PACK = 'bootstrap3'
+    CRISPY_TEMPLATE_PACK = 'bootstrap3'
 
 class Development(Common):
     """

@@ -9,7 +9,6 @@ class Migration(migrations.Migration):
 
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('questions', '0001_initial'),
     ]
 
     operations = [
@@ -18,8 +17,21 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('name', models.CharField(max_length=200)),
-                ('section', models.CharField(max_length=3)),
             ],
+            options={
+            },
+            bases=(models.Model,),
+        ),
+        migrations.CreateModel(
+            name='Course_User',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('course', models.ForeignKey(to='course.Course')),
+                ('proffesor', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
+            ],
+            options={
+            },
+            bases=(models.Model,),
         ),
         migrations.CreateModel(
             name='Group',
@@ -28,25 +40,14 @@ class Migration(migrations.Migration):
                 ('name', models.CharField(max_length=200)),
                 ('students', models.ManyToManyField(to=settings.AUTH_USER_MODEL)),
             ],
-        ),
-        migrations.AddField(
-            model_name='course',
-            name='groups',
-            field=models.ManyToManyField(to='course.Group'),
+            options={
+            },
+            bases=(models.Model,),
         ),
         migrations.AddField(
             model_name='course',
             name='proffesor',
-            field=models.ForeignKey(to=settings.AUTH_USER_MODEL),
-        ),
-        migrations.AddField(
-            model_name='course',
-            name='questions',
-            field=models.ManyToManyField(to='questions.Question'),
-        ),
-        migrations.AddField(
-            model_name='course',
-            name='students',
-            field=models.ManyToManyField(related_name='student', to=settings.AUTH_USER_MODEL),
+            field=models.ManyToManyField(related_name='proffesor', through='course.Course_User', to=settings.AUTH_USER_MODEL),
+            preserve_default=True,
         ),
     ]
