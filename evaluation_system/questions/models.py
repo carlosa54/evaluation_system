@@ -6,8 +6,8 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 
 class Answer(models.Model):
 	score = models.IntegerField(validators = [MinValueValidator(0), MaxValueValidator(10)], null=True)
-	answered_by = models.CharField(max_length = 200)
-	answered_for = models.CharField(max_length = 200)
+	answered_by = models.ForeignKey(User, limit_choices_to= {'type':'student'}, related_name = 'answered_by')
+	answered_for = models.ForeignKey(User, limit_choices_to= {'type':'student'}, related_name = 'answered_for')
 
 class Question(models.Model):
 	question_text = models.TextField()
