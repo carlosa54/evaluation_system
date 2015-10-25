@@ -44,6 +44,10 @@ urlpatterns = [
         r'^',
         include('evaluation_system.questions.urls')
     ),
+    url(
+        r'^',
+        include('evaluation_system.dashboard.urls')
+    ),
 ]
 
 if settings.DEBUG:

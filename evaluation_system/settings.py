@@ -54,6 +54,7 @@ class Common(Configuration):
         'evaluation_system.questions',
         'evaluation_system.users',
         'evaluation_system.evaluation',
+        'evaluation_system.dashboard',
 
     )
 
