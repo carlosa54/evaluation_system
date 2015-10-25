@@ -3,5 +3,4 @@ from ..course.models import Course
 # Register your models here.
 
 
-#admin.site.register(Course, CourseAdmin)
-#admin.site.register(Group, GroupAdmin)
+admin.site.register(Course)

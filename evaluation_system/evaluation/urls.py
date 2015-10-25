@@ -3,9 +3,12 @@ from django.conf.urls import url
 from . import views
 
 urlpatterns = [
-	url(
-		r'^evaluate/$', 
+	url(r'^evaluate/$', 
 		views.ProfessorEvaluateView.as_view(), 
 		name='evaluate'
+	),
+	url(r'^choices/$', 
+		views.StudentChoicesView.as_view() , 
+		name='studentchoices'
 	),
 ]
