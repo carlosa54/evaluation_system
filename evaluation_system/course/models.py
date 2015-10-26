@@ -10,7 +10,7 @@ class Course(models.Model):
 
 	def __unicode__(self):
 		return self.name
-
+		
 class Course_User(models.Model):
 	course = models.ForeignKey(Course)
 	professor = models.ForeignKey(User)

@@ -11,4 +11,7 @@ class Answer(models.Model):
 
 class Question(models.Model):
 	question_text = models.TextField()
-	answers = models.ForeignKey(Answer)
+	answers = models.ForeignKey(Answer, null= True)
+
+	def __unicode__(self):
+		return self.question_text

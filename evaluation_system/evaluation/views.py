@@ -67,8 +67,7 @@ class StudentChoicesView(TemplateView):
 
 	def get_course_and_groups(self, user, context):
 		group = Group_User.objects.filter(student = user)
-		context['groups'] = group 
-		print group
+		context['groups'] = group
 		return context
 
 

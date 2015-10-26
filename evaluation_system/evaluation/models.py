@@ -11,8 +11,7 @@ class Evaluation(models.Model):
 	seccion = models.CharField(max_length= 3)
 	questions = models.ManyToManyField(Question, through = "Evaluation_Question")
 
-	def __unicode__(self):
-		return self.course.name
+	
 
 	def group_names(self):
 		return ', '.join([a.name for a in self.groups.all()])
@@ -28,8 +27,6 @@ class Group(models.Model):
 	students = models.ManyToManyField(User, limit_choices_to= {'type':'student'}, through = "Group_User")
 	evaluation = models.ForeignKey(Evaluation, related_name = 'groups') 
 
-	def __unicode__(self):
-		return self.name
 
 	#Method added for displaying all students of the group in the admin page ManyToMany 
 	def student_names(self):
@@ -40,6 +37,5 @@ class Group_User(models.Model):
 	group = models.ForeignKey(Group)
 	student = models.ForeignKey(User, limit_choices_to= {'type':'student'})
 
-	def __unicode__(self):
-		return self.student.first_name
+	
 
