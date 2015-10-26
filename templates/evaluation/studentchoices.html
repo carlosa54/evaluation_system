@@ -1,13 +1,14 @@
-{% extends 'base.html' %}
-
+{% extends 'home.html' %}
 
 {% block content %}
 {% for group in groups %}
-<h1>{{group.group.name}}</h1>
+<div class="col-md-9 col-md-push-3">
+	<form class="form-group" id="myform" method="post" action="/">
+		{% csrf_token %}
+		<input type="hidden" name="group-name" value={{group.group.name}} />
+        <a href="#" onclick="document.forms[0].submit();return false;">{{group.group.name}}</a>
+	</form>
+</div>
 {% endfor %}
 
 {% endblock %}
-
-
-
-#cuso

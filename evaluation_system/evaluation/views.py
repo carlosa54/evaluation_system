@@ -70,6 +70,16 @@ class StudentChoicesView(TemplateView):
 		context['groups'] = group
 		return context
 
+	def firstchoice(request):
+    		if request.method == 'POST':
+        		try:
+            			choice = request.POST['group-name']
+            			# TODO use flag
+        		except KeyError:
+            			print 'No group !'
+			return render_to_response('studentevaluate.html', {},
+        		context_instance=RequestContext(request))
+
 
 
 
