@@ -5,7 +5,7 @@ from .forms import ProfessorEvaluateForm
 
 # Create your views here.
 class ProfessorEvaluateView(TemplateView):
-	template_name = "evaluation/evaluate.html"
+	template_name = "dashboard/evaluate.html"
 
 	def post(self, request, *args, **kwargs):
 		if not request.user.is_authenticated():
