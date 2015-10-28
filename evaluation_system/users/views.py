@@ -14,7 +14,7 @@ def user_logout(request):
 def home(request):
 	if not request.user.is_authenticated():
 		return redirect("/login")
-	if request.user.type == 'student':
+	if request.user.type == 'professor':
 		return redirect('/evaluate')
 	body = "Welcome please register or login"
 	title = "Evaluation System"

@@ -1,8 +1,22 @@
 {% load crispy_forms_tags %}
 {% block content %}
+{% if error %}
+    <div class="alert alert-dismissable alert-danger">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        <strong>Oh snap!</strong> {{ errors }}
+    </div>
+{% endif %}
+{% if success %}
+    <div class="alert alert-dismissable alert-success">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+       {{ success }}
+    </div>
+{% endif %}
+<h1 class= "page-header">Crear Evaluación</h1>
 <div class = "jumbotron">
 <form method="post" action="{% url 'evaluate' %}" class="form-horizontal"> {% csrf_token %}
 	{{form|crispy}}
+	<input type="submit" value="Submit" class="btn btn-default">
 </form>
 </div>
 {% endblock %} 
