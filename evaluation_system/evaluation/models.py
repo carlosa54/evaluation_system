@@ -3,9 +3,11 @@ from djangoyearlessdate.models import YearField
 from ..questions.models import Question
 from ..course.models import Course
 from ..users.models import User
+import datetime
+
 # Create your models here.
 class Evaluation(models.Model):
-	academic_year = YearField(default = '2015')
+	academic_year = YearField(default = datetime.date.today().strftime("%Y"))
 	course = models.ForeignKey(Course)
 	semester = models.IntegerField()
 	seccion = models.CharField(max_length= 3)
