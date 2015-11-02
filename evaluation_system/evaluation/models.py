@@ -25,9 +25,12 @@ class Evaluation_Question(models.Model):
 	evaluation = models.ForeignKey(Evaluation)
 	question = models.ForeignKey(Question)
 
+	def __unicode__(self):
+		return self.question.question_text
+
 class Group(models.Model):
 	name = models.CharField(max_length=200)
-	students = models.ManyToManyField(User, limit_choices_to= {'type':'student'}, through = "Group_User")
+	students = models.ManyToManyField(User, limit_choices_to= {'type':'student'}, through = "Group_User", related_name = 'group')
 	evaluation = models.ForeignKey(Evaluation, related_name = 'groups') 
 
 

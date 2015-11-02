@@ -4,6 +4,8 @@ from django.shortcuts import redirect
 from .forms import ProfessorEvaluateForm
 from ..course.models import Course
 from .models import Group_User
+from ..users.models import User
+from django import template
 
 # Create your views here.
 class ProfessorEvaluateView(TemplateView):
@@ -56,6 +58,8 @@ class StudentEvaluateView(TemplateView):
 class StudentChoicesView(TemplateView):
 	template_name = "evaluation/studentchoices.html"
 
+	register = template.Library()
+
 	def get(self,request, *args, **kwargs):
 		if not request.user.is_authenticated():
 			return redirect("/login")
@@ -67,9 +71,31 @@ class StudentChoicesView(TemplateView):
 
 	def get_course_and_groups(self, user, context):
 		group = Group_User.objects.filter(student = user)
+
+		variable = []
+
+		for students in group:
+			test = Group_User.objects.filter(group = students)
+			print test
+			for student in test:
+				variable.append(student)
+			 
+			# for student in test:
+			# 	if not student.group.id in variable:
+			# 		variable[student.group.id] = [student.student]
+			# 	else:
+			# 		variable[student.group.id].append(student.student)
+			# 	print student.student.first_name + ' ' + student.group.name
+		print variable
+
 		context['groups'] = group
+		context['students'] = variable
 		return context
 
+	@register.filter
+	def get_at_index(list, index):
+		return list[index]
+		
 	def firstchoice(request):
     		if request.method == 'POST':
         		try:
