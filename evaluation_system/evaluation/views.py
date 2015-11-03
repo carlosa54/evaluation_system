@@ -82,22 +82,7 @@ class StudentChoicesView(TemplateView):
 		context['groups'] = groups
 		return context
 
-	@register.filter
-	def get_at_index(list, index):
-		return list[index]
 		
-	def firstchoice(request):
-    		if request.method == 'POST':
-        		try:
-            			choice = request.POST['group-name']
-            			# TODO use flag
-        		except KeyError:
-            			print 'No group !'
-			return render_to_response('studentevaluate.html', {},
-        		context_instance=RequestContext(request))
-
-
-
 
 
 
