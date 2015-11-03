@@ -3,7 +3,7 @@ from django.views.generic import TemplateView
 from django.shortcuts import redirect
 from .forms import ProfessorEvaluateForm
 from ..course.models import Course
-from .models import Group_User
+from .models import Group_User, Group
 from ..users.models import User
 from django import template
 
@@ -70,15 +70,7 @@ class StudentChoicesView(TemplateView):
 		return self.render_to_response(context)
 
 	def get_course_and_groups(self, user, context):
-		group = Group_User.objects.filter(student = user)
-
-		variable = []
-
-		for students in group:
-			test = Group_User.objects.filter(group = students)
-			print test
-			for student in test:
-				variable.append(student)
+		groups = Group.objects.filter(students = user)
 			 
 			# for student in test:
 			# 	if not student.group.id in variable:
@@ -86,10 +78,8 @@ class StudentChoicesView(TemplateView):
 			# 	else:
 			# 		variable[student.group.id].append(student.student)
 			# 	print student.student.first_name + ' ' + student.group.name
-		print variable
 
-		context['groups'] = group
-		context['students'] = variable
+		context['groups'] = groups
 		return context
 
 	@register.filter

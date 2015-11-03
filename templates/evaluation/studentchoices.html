@@ -5,24 +5,14 @@
 
 <div class="dropdown">
   <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-    {{group.group.name}} - {{group.group.evaluation.course}}
+    {{group.name}} - {{group.evaluation.course}}
     <span class="caret"></span>
   </button>
   <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
 
-  {% for student in students %}
-  {% if student.group.id == group.id %}
-      <li><a href="#"> {{ student.student.first_name }} </a></li>
-  {% endif %}
+  {% for student in group.students.all %}
+      <li><a href="#"> {{ student }} </a></li>
   {% endfor %}
-<!--   	{% for key, value in students.items %}
-    {% for student in value %}
-    {% if key == group.id %}
-    	<li><a href="#"> {{ student.first_name }} </a></li>
-    {% endif %}
-    {% endfor %}
-    {% endfor %} -->
-
   </ul>
 </div>	
 {% endfor %}
