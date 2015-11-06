@@ -117,7 +117,7 @@ class AddGroupView(TemplateView):
 			return redirect("/")		
 		context = self.get_context_data(**kwargs)
 
-		for = AddGroupForm()
+		form = AddGroupForm()
 		#To show only evaluations that are in the professor courses
 		form.fields['evaluation'].queryset = Evaluation.objects.filter(course__professor = request.user)
 
