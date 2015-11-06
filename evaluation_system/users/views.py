@@ -41,7 +41,7 @@ class AddStudentView(TemplateView):
 		form = UserCreationForm(request.POST)
 
 		if form.is_valid():
-			new_group = form.save()
+			new_user = form.save()
 
 			context["form"] = form
 			context["success"] = "Student created"
