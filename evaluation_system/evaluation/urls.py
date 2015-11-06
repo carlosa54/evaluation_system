@@ -11,4 +11,8 @@ urlpatterns = [
 		views.StudentChoicesView.as_view() , 
 		name='studentchoices'
 	),
+	url(r'^addgroup/$', 
+		views.AddGroupView.as_view() , 
+		name='addgroup'
+	),
 ]
