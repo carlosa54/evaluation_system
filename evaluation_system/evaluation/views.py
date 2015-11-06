@@ -21,10 +21,10 @@ class ProfessorEvaluateView(TemplateView):
 			new_evaluation = form.save()
 
 			context["form"] = form
-			context["success"] = "Evaluation created"
+			context["success"] = "Course created"
 		else:
 			context["form"] = form
-			context["error"] = "Evaluation failed"
+			context["error"] = "Course failed to create"
 		return self.render_to_response(context)
 
 	def get(self, request, *args, **kwargs):
