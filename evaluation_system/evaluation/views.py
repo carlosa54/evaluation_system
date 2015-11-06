@@ -15,7 +15,16 @@ class ProfessorEvaluateView(TemplateView):
 		if not request.user.is_authenticated():
 			return redirect("/login")
 		context = self.get_context_data(**kwargs)
-		
+		form = ProfessorEvaluateForm(request.POST)
+
+		if form.is_valid():
+			new_evaluation = form.save()
+
+			context["form"] = form
+			context["success"] = "Evaluation created"
+		else:
+			context["form"] = form
+			context["error"] = "Evaluation failed"
 		return self.render_to_response(context)
 
 	def get(self, request, *args, **kwargs):
