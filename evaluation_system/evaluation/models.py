@@ -7,6 +7,7 @@ import datetime
 
 # Create your models here.
 class Evaluation(models.Model):
+	name = models.CharField(max_length= 200, default = 'Unknown')
 	academic_year = YearField(default = datetime.date.today().strftime("%Y"))
 	course = models.ForeignKey(Course)
 	semester = models.IntegerField()
@@ -14,7 +15,7 @@ class Evaluation(models.Model):
 	questions = models.ManyToManyField(Question, through = "Evaluation_Question")
 
 	def __unicode__(self):
-		return self.course.name
+		return self.name
 
 	def group_names(self):
 		return ', '.join([a.name for a in self.groups.all()])

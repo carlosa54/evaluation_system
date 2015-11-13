@@ -36,6 +36,8 @@ class ProfessorEvaluateView(TemplateView):
 
 		form = ProfessorEvaluateForm()
 
+		form.fields['course'].queryset = Course.objects.filter(professor = request.user)
+
 		context['form'] = form
 
 		#context = self.retrieve_persons(request.user, context)
@@ -119,7 +121,7 @@ class AddGroupView(TemplateView):
 
 		form = AddGroupForm()
 		#To show only evaluations that are in the professor courses
-		form.fields['evaluation'].queryset = Evaluation.objects.filter(course__professor = request.user)
+		form.fields['evaluation'].queryset = Evaluation.objects.filter(course= request.session['course_id'])
 
 		context['form'] = form
 		return self.render_to_response(context)
