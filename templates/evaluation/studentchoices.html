@@ -1,61 +1,85 @@
-{% extends 'home.html' %}
+{% extends 'base.html' %}
 
 {% block content %}
-{% for group in groups %}
-<button type="button" class="btn btn-default">{{group.evaluation.course}}</button>
-<select class="form-control">
 
-	{% for student in group.students.all %}
-      <option> {{ student }} </option>
-  {% endfor %}
-</select>
+<div class="jumbotron">
+  <div class="container">
 
+  <script type="text/javascript" >
 
-<div class="dropdown">
-  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-    {{group.name}} - {{group.evaluation.course}}
-    <span class="caret"></span>
-  </button>
-  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+    function Show(counter){
+      $(document).ready(function () { $('[id^="testDiv"]').hide();}); 
+      $(document).ready(function () { $('#testDiv' + counter).show();});
+    }
+  </script>
 
-  </ul>
-</div>
-
-<form action="" method="POST" role="form">
-	<legend>Preguntas</legend>
-
-	
-		{% for que in group.evaluation.questions.all %}
-		<div class="form-group">
-		<label>{{que}}</label>
-		<label class="radio-inline">
-          <input name="radioGroup" id="radio1" value="option1" type="radio"> 1
-        </label>
-        <label class="radio-inline">
-          <input name="radioGroup" id="radio1" value="option1" type="radio"> 2
-        </label>
-        <label class="radio-inline">
-          <input name="radioGroup" id="radio1" value="option1" type="radio"> 3
-        </label>
-        <label class="radio-inline">
-          <input name="radioGroup" id="radio1" value="option1" type="radio"> 4
-        </label>
-        <label class="radio-inline">
-          <input name="radioGroup" id="radio1" value="option1" type="radio"> 5
-        </label>
+<div class="row">
+  <div class="col-sm-3">
+    <div class="sidebar-nav">
+      <div class="navbar navbar-default" role="navigation">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <span class="visible-xs navbar-brand">Sidebar menu</span>
         </div>
-		{% endfor %}
-		
-		
-	
+        <div class="navbar-collapse collapse sidebar-navbar-collapse">
+        
+          <ul class="nav navbar-nav">
+            {% for group in groups %}
+              <li><a id="{{forloop.counter}}" href="javascript:Show({{forloop.counter}})";>{{group.evaluation.course}}</a></li>
+            {% endfor %}
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-9">
 
-	
+    {% for group in groups %}
+    <div id= "testDiv{{forloop.counter}}" style = "Display: none">
+      <select class="form-control" id="s{{forloop.counter}}">
+        {% for student in group.students.all %}
+            <option> {{ student }}  </option>
+        {% endfor %}
 
-	<button type="submit" class="btn btn-primary">Submit</button>
-</form>
+      </select>
 
+      <form action="" method="POST" role="form" id="q{{forloop.counter}}"> {% csrf_token %}
 
-{% endfor %}
+        <legend>Preguntas {{forloop.counter}}</legend>
 
+          {% for que in group.evaluation.questions.all %}
+            <div class="form-group" id="questions" >
+              <label>{{que}}</label>
+              <label class="radio-inline">
+                    <input name="radioGroup1" id="radio1" value="option1" type="radio"> 1
+                  </label>
+                  <label class="radio-inline">
+                    <input name="radioGroup2" id="radio1" value="option1" type="radio"> 2
+                  </label>
+                  <label class="radio-inline">
+                    <input name="radioGroup3" id="radio1" value="option1" type="radio"> 3
+                  </label>
+                  <label class="radio-inline">
+                    <input name="radioGroup4" id="radio1" value="option1" type="radio"> 4
+                  </label>
+                  <label class="radio-inline">
+                    <input name="radioGroup5" id="radio1" value="option1" type="radio"> 5
+                </label>
+            </div>
+          {% endfor %}
+          
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+      </div>
+      {% endfor %}
+  </div>
+</div>
+      {% endblock %}
 
-{% endblock %}
+  </div>
+</div>
