@@ -10,7 +10,7 @@ class Question(models.Model):
 		return self.question_text
 
 class Answer(models.Model):
-	score = models.IntegerField(validators = [MinValueValidator(0), MaxValueValidator(10)], null=True)
+	score = models.IntegerField(validators = [MinValueValidator(0), MaxValueValidator(5)], null=True)
 	question = models.ForeignKey(Question, null = True)
 	evaluation_id = models.IntegerField(null=True)
 	student = models.IntegerField(null=True)
