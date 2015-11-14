@@ -7,14 +7,9 @@
 
   <script type="text/javascript" >
 
-  
-
-
     function Show(counter){
-      $(document).ready(function () { $('[id^="testDiv"]').hide();});
- 
+      $(document).ready(function () { $('[id^="testDiv"]').hide();}); 
       $(document).ready(function () { $('#testDiv' + counter).show();});
-        
     }
   </script>
 
@@ -53,7 +48,7 @@
 
       </select>
 
-      <form action="" method="POST" role="form" id="q{{forloop.counter}}"  >
+      <form action="" method="POST" role="form" id="q{{forloop.counter}}"> {% csrf_token %}
 
         <legend>Preguntas {{forloop.counter}}</legend>
 
@@ -61,19 +56,19 @@
             <div class="form-group" id="questions" >
               <label>{{que}}</label>
               <label class="radio-inline">
-                    <input name="radioGroup" id="radio1" value="option1" type="radio"> 1
+                    <input name="radioGroup1" id="radio1" value="option1" type="radio"> 1
                   </label>
                   <label class="radio-inline">
-                    <input name="radioGroup" id="radio1" value="option1" type="radio"> 2
+                    <input name="radioGroup2" id="radio1" value="option1" type="radio"> 2
                   </label>
                   <label class="radio-inline">
-                    <input name="radioGroup" id="radio1" value="option1" type="radio"> 3
+                    <input name="radioGroup3" id="radio1" value="option1" type="radio"> 3
                   </label>
                   <label class="radio-inline">
-                    <input name="radioGroup" id="radio1" value="option1" type="radio"> 4
+                    <input name="radioGroup4" id="radio1" value="option1" type="radio"> 4
                   </label>
                   <label class="radio-inline">
-                    <input name="radioGroup" id="radio1" value="option1" type="radio"> 5
+                    <input name="radioGroup5" id="radio1" value="option1" type="radio"> 5
                 </label>
             </div>
           {% endfor %}

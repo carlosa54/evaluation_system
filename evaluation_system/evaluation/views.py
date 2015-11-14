@@ -58,7 +58,14 @@ class StudentEvaluateView(TemplateView):
 class StudentChoicesView(TemplateView):
 	template_name = "evaluation/studentchoices.html"
 
-	register = template.Library()
+	def post(self, request, *args, **kwargs):
+		if not request.user.is_authenticated():
+			return redirect("/login")
+		context = self.get_context_data(**kwargs)
+
+		print request.POST
+		
+		return self.render_to_response(context)
 
 	def get(self,request, *args, **kwargs):
 		if not request.user.is_authenticated():
