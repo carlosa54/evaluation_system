@@ -1,10 +1,11 @@
 from django.shortcuts import render
 from django.views.generic import TemplateView
 from django.shortcuts import redirect
-from .forms import ProfessorEvaluateForm, AddGroupForm
+from .forms import ProfessorEvaluateForm, AddGroupForm, AddAnswerForm
 from ..course.models import Course
 from .models import Group_User, Group, Evaluation
 from ..users.models import User
+from ..questions.models import Question
 from django import template
 
 # Create your views here.
@@ -52,18 +53,40 @@ class StudentChoicesView(TemplateView):
 			return redirect("/login")
 		context = self.get_context_data(**kwargs)
 
-		print request.POST
-		
+		for name, value in request.POST.items():
+			if name.startswith('question_'):
+				print name + ' ' + value 
+
+		questions = self.get_questions()
+		form = AddAnswerForm(request.POST, extra = questions)
+
+		if form.is_valid():
+			print request.POST
+			for (question, answer) in form.extra_answers():
+				self.save_answer(question, answer)
+			return redirect("/")
+		context["form"] = form
 		return self.render_to_response(context)
 
 	def get(self,request, *args, **kwargs):
 		if not request.user.is_authenticated():
 			return redirect("/login")
 		context = self.get_context_data(**kwargs)
+		questions = self.get_questions()
+		form = AddAnswerForm(extra = questions)
+		context["form"] = form
 
 		context = self.get_course_and_groups(request.user, context)
 
 		return self.render_to_response(context)
+
+	def get_questions(self):
+		questions = Question.objects.filter(evaluation__name = "Evaluation Probando")
+		return questions
+
+	def save_answer(self,question, answer):
+		print question
+		print answer
 
 	def get_course_and_groups(self, user, context):
 		groups = Group.objects.filter(students = user)
@@ -110,8 +133,3 @@ class AddGroupView(TemplateView):
 
 		context['form'] = form
 		return self.render_to_response(context)
-
-		
-
-
-

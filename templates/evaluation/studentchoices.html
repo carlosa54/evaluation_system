@@ -41,34 +41,34 @@
 
     {% for group in groups %}
     <div id= "testDiv{{forloop.counter}}" style = "Display: none">
-      <select class="form-control" id="s{{forloop.counter}}">
+      <select class="form-control" >
         {% for student in group.students.all %}
             <option> {{ student }}  </option>
         {% endfor %}
 
       </select>
 
-      <form action="" method="POST" role="form" id="q{{forloop.counter}}"> {% csrf_token %}
+      <form action="{% url 'studentchoices' %}" method="POST" role="form"> {% csrf_token %}
 
         <legend>Preguntas {{forloop.counter}}</legend>
 
           {% for que in group.evaluation.questions.all %}
-            <div class="form-group" id="questions" >
-              <label>{{que}}</label>
-              <label class="radio-inline">
-                    <input name="radioGroup1" id="radio1" value="option1" type="radio"> 1
+            <div class="form-group">
+                  <label>{{que}}</label>
+                  <label class="radio-inline">
+                    <input name="question_{{que.id}}" id="radio1" value="1" type="radio"> 1
                   </label>
                   <label class="radio-inline">
-                    <input name="radioGroup2" id="radio1" value="option1" type="radio"> 2
+                    <input name="question_{{que.id}}" id="radio2" value="2" type="radio"> 2
                   </label>
                   <label class="radio-inline">
-                    <input name="radioGroup3" id="radio1" value="option1" type="radio"> 3
+                    <input name="question_{{que.id}}" id="radio3" value="3" type="radio"> 3
                   </label>
                   <label class="radio-inline">
-                    <input name="radioGroup4" id="radio1" value="option1" type="radio"> 4
+                    <input name="question_{{que.id}}" id="radio4" value="4" type="radio"> 4
                   </label>
                   <label class="radio-inline">
-                    <input name="radioGroup5" id="radio1" value="option1" type="radio"> 5
+                    <input name="question_{{que.id}}" id="radio5" value="5" type="radio"> 5
                 </label>
             </div>
           {% endfor %}
