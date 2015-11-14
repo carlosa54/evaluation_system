@@ -41,14 +41,14 @@
 
     {% for group in groups %}
     <div id= "testDiv{{forloop.counter}}" style = "Display: none">
-      <select class="form-control" >
+      <select class="form-control" name = "student" form = "questionform" >
         {% for student in group.students.all %}
-            <option> {{ student }}  </option>
+            <option value = "{{student.id}}"> {{ student }}  </option>
         {% endfor %}
 
       </select>
 
-      <form action="{% url 'studentchoices' %}" method="POST" role="form"> {% csrf_token %}
+      <form action="{% url 'studentchoices' %}" method="POST" role="form" id = "questionform"> {% csrf_token %}
 
         <legend>Preguntas {{forloop.counter}}</legend>
 
@@ -72,6 +72,8 @@
                 </label>
             </div>
           {% endfor %}
+
+          <input type="hidden" name="evaluation" value="{{group.evaluation.id}}">
           
         <button type="submit" class="btn btn-primary">Submit</button>
       </form>
