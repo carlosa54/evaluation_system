@@ -50,7 +50,7 @@
 
       <form action="{% url 'studentchoices' %}" method="POST" role="form" id = "questionform"> {% csrf_token %}
 
-        <legend>Preguntas {{forloop.counter}}</legend>
+        <legend>Preguntas</legend>
 
           {% for que in group.evaluation.questions.all %}
             <div class="form-group">
