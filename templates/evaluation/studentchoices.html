@@ -29,8 +29,11 @@
         <div class="navbar-collapse collapse sidebar-navbar-collapse">
         
           <ul class="nav navbar-nav">
+
             {% for group in groups %}
-              <li><a id="{{forloop.counter}}" href="javascript:Show({{forloop.counter}})";>{{group.evaluation.course}}</a></li>
+            {% if not group.done %}
+              <li><a id="{{forloop.counter}}" href="javascript:Show({{forloop.counter}})";>{{group.evaluation.course}} {{group.done}}</a></li>
+            {% endif %}
             {% endfor %}
           </ul>
         </div><!--/.nav-collapse -->
@@ -40,10 +43,13 @@
   <div class="col-sm-9">
 
     {% for group in groups %}
+
     <div id= "testDiv{{forloop.counter}}" style = "Display: none">
       <select class="form-control" name = "student" form = "questionform" >
-        {% for student in group.students.all %}
-            <option value = "{{student.id}}"> {{ student }}  </option>
+        {% for student in group.group_user_set.all %}
+        {% if not student.done %}
+            <option value = "{{student.student.id}}"> {{ student.student }}  </option>
+        {% endif %}
         {% endfor %}
 
       </select>
