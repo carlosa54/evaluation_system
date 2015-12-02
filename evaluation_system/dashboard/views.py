@@ -25,14 +25,6 @@ class DashboardView(TemplateView):
 		return self.render_to_response(context)
 
 class SetCourseDashboardView(TemplateView):
-	template_name = "dashboard/index.html"
-
-	def post(self, request, *args, **kwargs):
-		if not request.user.is_authenticated():
-			return redirect("/login")
-		context = self.get_context_data(**kwargs)
-		
-		return self.render_to_response(context)
 
 	def get(self, request, *args, **kwargs):
 		if not request.user.is_authenticated():
@@ -41,6 +33,7 @@ class SetCourseDashboardView(TemplateView):
 
 		if kwargs['course_id']:
 			request.session['course_id'] = kwargs['course_id']
+			return redirect("/evaluate")
 
 
 
