@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.views.generic import TemplateView
 from django.shortcuts import redirect
-from ..course.models import Course
+from ..evaluation.models import Evaluation
 
 
 
@@ -15,7 +15,7 @@ class showProfessorReport(TemplateView):
 			return redirect("/")		
 		context = self.get_context_data(**kwargs)
 
-		context["curso"] = Course.objects.filter(professor = request.user)
+		context["evaluations"] = Evaluation.objects.filter(course__professor = request.user)
 
 
 		return self.render_to_response(context)
