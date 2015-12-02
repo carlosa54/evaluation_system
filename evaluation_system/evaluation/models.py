@@ -40,6 +40,9 @@ class Group(models.Model):
 		return ', '.join([a.first_name for a in self.students.all()])
 	student_names.short_description = "Student names"
 
+	def __unicode__(self):
+		self.name
+
 class Group_User(models.Model):
 	group = models.ForeignKey(Group)
 	student = models.ForeignKey(User, limit_choices_to= {'type':'student'})
