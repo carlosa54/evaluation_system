@@ -64,5 +64,21 @@ class Group_User(models.Model):
 	def __unicode__(self):
 		return self.group.name
 
+	@property
+	def score(self):
+		sum = 0
+		totalque = 0
+		for que in self.group.evaluation.questions.all():
+			for answer in que.answer_set.all():
+				if answer.student_evaluated == self.student.id:
+					sum += answer.score
+					totalque += 1
+		return str(sum) + '/' + str(totalque * 5)
+
+		
+
+
+
+
 	
 
