@@ -13,4 +13,8 @@ urlpatterns = [
         views.user_logout,
         name="logout"
     ),
+    url(r'^addstudent/$', 
+		views.AddStudentView.as_view() , 
+		name='addstudent'
+	),
 ]

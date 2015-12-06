@@ -1,6 +1,5 @@
-{% load staticfiles %}
-
 <!DOCTYPE html>
+{% load staticfiles %}
 <html lang="en">
   <head>
     <meta charset="utf-8">
@@ -13,14 +12,15 @@
     <title>{{ title }}</title>
 
     <!-- Bootstrap core CSS -->
-    <link href='{% static "bootstrap/css/bootstrap.min.css" %}' rel="stylesheet">
+    <link href="{% static 'bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
     <!-- Bootstrap theme -->
-    <link href='{% static "bootstrap/css/bootstrap-theme.min.css" %}' rel="stylesheet">
+    <link href="{% static 'bootstrap/css/bootstrap-theme.min.css' %}" rel="stylesheet">
 
     <!-- Custom styles for this template -->
     <link rel="stylesheet" href="{% static 'css/navbar.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/footer-distributed.css'%}">
     {% block extra_css %}
+        <link rel="stylesheet" href="{% static 'css/choiceSidebar.css' %}">
     {% endblock %}
 
     <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
@@ -32,29 +32,31 @@
     <![endif]-->
   </head>
 
-  <body role="document">
+  <body>
+
+    <div id= "wrapper" >
 
     {% include 'navbar.html' %}
 
-    <div class="container" role="main">
+    <div class="container">
 
-      {% block jumbotron %}
-      {% endblock %}
+    {% block jumbotron %}
+    {% endblock %}
 
-      {% block content %}
-      {% endblock %}
+    {% block content %}
+    {% endblock %}
 
 
       
 
 
     </div> <!-- /container -->
-
+    </div> <!-- /wrapper -->
 
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="{% static 'js/jquery-1.11.3.min.js' %}"></script>
     <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
     <script src="{% static 'bootstrap/js/docs.min.js' %}"></script>
   </body>

@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="jumbotron">
+<nav>
+	<h3>Escoga el curso</h3>
+  <ul class="nav nav-pills nav-stacked text-center">
+  	{% for course in courses %}
+    <li><a href="/dashboard/{{course.id}}">{{course}}</a></li>
+    {% endfor %}
+  </ul>
+</nav>
+</div>
+{% endblock %}
