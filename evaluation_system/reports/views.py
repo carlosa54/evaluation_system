@@ -30,7 +30,12 @@ class showStudentReport(TemplateView):
 			return redirect("/")		
 		context = self.get_context_data(**kwargs)
 
-		context["group"] = Group_User.objects.filter(student = request.user)
+		group = Group_User.objects.filter(student = request.user)
+
+		context["group"] = group
+
+		if True:
+			context['error'] = "You're not assigned to any courses"
 
 
 		return self.render_to_response(context)
