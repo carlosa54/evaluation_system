@@ -2,6 +2,7 @@ from django.views.generic import TemplateView
 from django.shortcuts import redirect
 from .forms import AddQuestionForm
 from ..evaluation.models import Evaluation, Evaluation_Question
+from ..course.models import Course
 
 # Create your views here.
 class AddQuestionView(TemplateView):
@@ -34,6 +35,7 @@ class AddQuestionView(TemplateView):
 		context = self.get_context_data(**kwargs)
 
 		form = AddQuestionForm()
+		context["curso"] = Course.objects.filter(pk= request.session['course_id'])[0].name
 		
 		form.fields['evaluation'].queryset = Evaluation.objects.filter(course= request.session['course_id'])
 

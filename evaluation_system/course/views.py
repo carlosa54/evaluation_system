@@ -1,7 +1,7 @@
 from django.views.generic import TemplateView
 from django.shortcuts import redirect
 from .forms import CourseForm
-from models import Course_User
+from models import Course_User, Course
 
 # Create your views here.
 class AddCourseView(TemplateView):
@@ -32,6 +32,8 @@ class AddCourseView(TemplateView):
 		if not request.user.type == "professor":
 			return redirect("/")		
 		context = self.get_context_data(**kwargs)
+
+		context["curso"] = Course.objects.filter(pk= request.session['course_id'])[0].name
 
 		form = CourseForm()
 

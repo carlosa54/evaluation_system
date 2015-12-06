@@ -6,6 +6,7 @@ from .forms import UserCreationForm
 from django import forms
 from django.shortcuts import redirect
 from .models import User
+from ..course.models import Course
 
 
 def user_logout(request):
@@ -56,6 +57,7 @@ class AddStudentView(TemplateView):
 		if not request.user.type == "professor":
 			return redirect("/")		
 		context = self.get_context_data(**kwargs)
+		context["curso"] = Course.objects.filter(pk= request.session['course_id'])[0].name
 
 		form = UserCreationForm()
 		form.fields['type'].widget = forms.HiddenInput()
