@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="jumbotron">
+  <div class="container">
+
+  <script type="text/javascript" >
+
+    function Show(counter){
+      $(document).ready(function () { $('[id^="testDiv"]').hide();}); 
+      $(document).ready(function () { $('#testDiv' + counter).show();});
+    }
+  </script>
+
+<div class="row">
+  <div class="col-sm-3">
+    <div class="sidebar-nav">
+      <div class="navbar navbar-default" role="navigation">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <span class="visible-xs navbar-brand">Sidebar menu</span>
+        </div>
+        <div class="navbar-collapse collapse sidebar-navbar-collapse">
+        
+          <ul class="nav navbar-nav">
+
+            {% for group in groups %}
+            {% if not group.done %}
+              <li><a id="{{forloop.counter}}" href="javascript:Show({{forloop.counter}})";>{{group.evaluation.course}} {{group.done}}</a></li>
+            {% endif %}
+            {% endfor %}
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-9">
+
+    {% for group in groups %}
+
+    
+
+      <form action="{% url 'studentchoices' %}" method="POST" role="form" > {% csrf_token %}
+
+        <div id= "testDiv{{forloop.counter}}" style = "Display: none">
+      <select class="form-control" name = "student" >
+        {% for student in group.group_user_set.all %}
+        {% if not student.done %}
+            <option name= "student" value = "{{student.student.id}}"> {{ student.student }}  </option>
+        {% endif %}
+        {% endfor %}
+
+      </select>
+        <legend>Preguntas</legend>
+
+          {% for que in group.evaluation.questions.all %}
+            <div class="form-group">
+                  <label>{{que}}</label>
+                  <label class="radio-inline">
+                    <input name="question_{{que.id}}" id="radio1" value="1" type="radio" checked="checked"> 1
+                  </label>
+                  <label class="radio-inline">
+                    <input name="question_{{que.id}}" id="radio2" value="2" type="radio"> 2
+                  </label>
+                  <label class="radio-inline">
+                    <input name="question_{{que.id}}" id="radio3" value="3" type="radio"> 3
+                  </label>
+                  <label class="radio-inline">
+                    <input name="question_{{que.id}}" id="radio4" value="4" type="radio"> 4
+                  </label>
+                  <label class="radio-inline">
+                    <input name="question_{{que.id}}" id="radio5" value="5" type="radio"> 5
+                </label>
+            </div>
+          {% endfor %}
+
+          <input type="hidden" name="evaluation" value="{{group.evaluation.id}}">
+          
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+      </div>
+      {% endfor %}
+  </div>
+</div>
+      {% endblock %}
+
+  </div>
+</div>

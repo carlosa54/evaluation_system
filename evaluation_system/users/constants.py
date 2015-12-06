@@ -1,4 +1,4 @@
 ACCOUNT_TYPE_CHOICES = (
-		('proffesor','proffesor'),
+		('professor','professor'),
 		('student','student')
 )
