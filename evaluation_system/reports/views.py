@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.views.generic import TemplateView
 from django.shortcuts import redirect
-from ..evaluation.models import Evaluation
+from ..evaluation.models import Evaluation, Group_User
 
 
 
