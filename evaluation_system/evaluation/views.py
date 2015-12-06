@@ -1,10 +1,11 @@
 from django.shortcuts import render
 from django.views.generic import TemplateView
 from django.shortcuts import redirect
-from .forms import ProfessorEvaluateForm, AddGroupForm
+from .forms import ProfessorEvaluateForm, AddGroupForm, AddAnswerForm
 from ..course.models import Course
 from .models import Group_User, Group, Evaluation
 from ..users.models import User
+from ..questions.models import Question, Answer
 from django import template
 
 # Create your views here.
@@ -46,28 +47,6 @@ class ProfessorEvaluateView(TemplateView):
 		#context = self.retrieve_persons(request.user, context)
 		return self.render_to_response(context)
 
-class StudentEvaluateView(TemplateView):
-	template_name = "evaluation/studentevaluate.html"
-
-	def post(self, request, *args, **kwargs):
-		if not request.user.is_authenticated():
-			return redirect("/login")
-		context = self.get_context_data(**kwargs)
-		
-		return self.render_to_response(context)
-
-	def get(self, request, *args, **kwargs):
-		if not request.user.is_authenticated():
-			return redirect("/login")			
-		context = self.get_context_data(**kwargs)
-
-		form = ProfessorEvaluateForm()
-
-		context['form'] = form
-
-		#context = self.retrieve_persons(request.user, context)
-		return self.render_to_response(context)
-
 
 class StudentChoicesView(TemplateView):
 	template_name = "evaluation/studentchoices.html"
@@ -77,28 +56,28 @@ class StudentChoicesView(TemplateView):
 			return redirect("/login")
 		context = self.get_context_data(**kwargs)
 
-		print request.POST
-		
+		for name, value in request.POST.items():
+			if name.startswith('question_'):
+				prop = name.split('_')
+				test = Question.objects.get(pk = prop[1])
+				eva = Evaluation.objects.get(pk = request.POST['evaluation'])
+				ans = Answer(evaluation_id = eva.id ,question = test, score = value, student = request.user.id, student_evaluated = request.POST['student'])
+				ans.save()
+
 		return self.render_to_response(context)
 
 	def get(self,request, *args, **kwargs):
 		if not request.user.is_authenticated():
 			return redirect("/login")
 		context = self.get_context_data(**kwargs)
-
+		
 		context = self.get_course_and_groups(request.user, context)
 
 		return self.render_to_response(context)
 
+
 	def get_course_and_groups(self, user, context):
 		groups = Group.objects.filter(students = user)
-			 
-			# for student in test:
-			# 	if not student.group.id in variable:
-			# 		variable[student.group.id] = [student.student]
-			# 	else:
-			# 		variable[student.group.id].append(student.student)
-			# 	print student.student.first_name + ' ' + student.group.name
 
 		context['groups'] = groups
 		return context
@@ -135,8 +114,3 @@ class AddGroupView(TemplateView):
 
 		context['form'] = form
 		return self.render_to_response(context)
-
-		
-
-
-

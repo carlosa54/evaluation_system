@@ -12,9 +12,8 @@
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
             {% url 'home' as home %}
-            <li {% if request.path == home %} class="active" {% endif %}><a href="{% url 'home' %}">Home</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#contact">Contact</a></li>
+            <li {% if request.path == home %} class="active" {% endif %}><a href="{% url 'home' %}">Dashboard</a></li>
+            <li><a href="{% url 'report' %}">Reportes</a></li>
 
             {% if user.is_authenticated %}
             <li class="dropdown">
