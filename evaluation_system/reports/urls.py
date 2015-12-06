@@ -8,4 +8,9 @@ urlpatterns = [
         views.showProfessorReport.as_view(), 
 		name='report'
     ),
+	url(
+        r'^studentreport$',
+        views.showStudentReport.as_view(), 
+		name='studentreport'
+    ),
 ]
