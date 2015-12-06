@@ -40,6 +40,7 @@ class Group(models.Model):
 		return ', '.join([a.first_name for a in self.students.all()])
 	student_names.short_description = "Student names"
 
+
 	@property
 	def done(self):
 		count = len(self.group_user_set.all())
@@ -55,6 +56,10 @@ class Group(models.Model):
 		else:
 			return True
 
+
+
+	def __unicode__(self):
+		return self.name
 
 
 class Group_User(models.Model):

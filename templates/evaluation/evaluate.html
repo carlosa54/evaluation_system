@@ -12,11 +12,13 @@
        {{ success }}
     </div>
 {% endif %}
-<h1 class= "page-header">Crear Evaluación</h1>
-<div class = "jumbotron">
-<form method="post" action="{% url 'evaluate' %}" class="form-horizontal"> {% csrf_token %}
-	{{form|crispy}}
-	<input type="submit" value="Submit" class="btn btn-default">
-</form>
+<div class="col-lg-12">
+    <h1 class= "page-header">Crear Evaluación</h1>
+    <div class = "jumbotron">
+    <form method="post" action="{% url 'evaluate' %}" class="form-horizontal"> {% csrf_token %}
+    	{{form|crispy}}
+    	<input type="submit" value="Submit" class="btn btn-default">
+    </form>
+    </div>
 </div>
 {% endblock %} 
