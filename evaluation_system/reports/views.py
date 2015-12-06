@@ -19,3 +19,18 @@ class showProfessorReport(TemplateView):
 
 
 		return self.render_to_response(context)
+
+class showStudentReport(TemplateView):
+	template_name= "report/studentReport.html"
+
+	def get(self, request, *args, **kwargs):
+		if not request.user.is_authenticated():
+			return redirect("/login")	
+		if not request.user.type == "student":
+			return redirect("/")		
+		context = self.get_context_data(**kwargs)
+
+		context["group"] = Group_User.objects.filter(student = request.user)
+
+
+		return self.render_to_response(context)
