@@ -44,12 +44,11 @@ class Group(models.Model):
 	@property
 	def done(self):
 		count = len(self.group_user_set.all())
-
 		if count > 1:
-			for student, i in enumerate(self.group_user_set.all()):
-				if not student.done:
+			for i, group in enumerate(self.group_user_set.all()):
+				if not group.done:
 					return False
-				elif i == count:
+				elif i + 1 == count:
 					return True
 		elif not self.group_user_set.all()[0].done:
 			return False

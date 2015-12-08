@@ -17,7 +17,7 @@ def home(request):
 	if not request.user.is_authenticated():
 		return redirect("/login")
 	if request.user.type == 'professor':
-		return redirect('/evaluate')
+		return redirect('/dashboard')
 	body = "Welcome please register or login"
 	title = "Evaluation System"
 	user = request.user

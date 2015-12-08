@@ -59,10 +59,15 @@ class StudentChoicesView(TemplateView):
 		for name, value in request.POST.items():
 			if name.startswith('question_'):
 				prop = name.split('_')
-				test = Question.objects.get(pk = prop[1])
+				que = Question.objects.get(pk = prop[1])
 				eva = Evaluation.objects.get(pk = request.POST['evaluation'])
-				ans = Answer(evaluation_id = eva.id ,question = test, score = value, student = request.user.id, student_evaluated = request.POST['student'])
+				ans = Answer(evaluation_id = eva.id ,question = que, score = value, student = request.user.id, student_evaluated = request.POST['student'])
 				ans.save()
+				stud = Group_User.objects.get(student = request.POST['student'], group__evaluation = eva.id)
+				stud.done = True
+				stud.save()
+		
+		return redirect("/choices")
 
 		return self.render_to_response(context)
 
@@ -78,7 +83,7 @@ class StudentChoicesView(TemplateView):
 
 	def get_course_and_groups(self, user, context):
 		groups = Group.objects.filter(students = user)
-
+		
 		context['groups'] = groups
 		return context
 
