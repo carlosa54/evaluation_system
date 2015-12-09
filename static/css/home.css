@@ -1,0 +1,17 @@
+.test:hover{
+	background-color: white;
+}
+
+#imgEva{
+	width: 100px;
+	height: 90px;
+}
+
+#imgRep{
+	width: 100px;
+	height: 90px;
+}
+
+a { 
+	color: inherit; 
+} 
