@@ -5,7 +5,7 @@ from .managers import AccountManager
 
 # Create your models here.
 class User(AbstractBaseUser):
-	username = models.CharField(max_length=30, unique=True, blank= True)
+	username = models.CharField(max_length=30, blank= True)
 	first_name = models.CharField(max_length=30)
 	last_name = models.CharField(max_length=30)
 	type = models.CharField(max_length=20, choices= ACCOUNT_TYPE_CHOICES, default='student')

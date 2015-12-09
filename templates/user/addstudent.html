@@ -15,6 +15,14 @@
 <h1 class= "page-header">Añadir Estudiante</h1>
 <div class = "jumbotron">
 <form method="post" action="{% url 'addstudent' %}" class="form-horizontal"> {% csrf_token %}
+    <div class="form-group">
+    <label>Escoga el grupo:</label>
+    <select style="width:100%; height:25px" name="group">
+        {% for group in groups %}
+        <option value="{{group.id}}">{{group}}</option>
+        {% endfor %}
+    </select>
+</div>
 	{{form|crispy}}
 	<input type="submit" value="Submit" class="btn btn-default">
 </form>

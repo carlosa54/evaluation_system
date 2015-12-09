@@ -17,13 +17,14 @@ class ProfessorEvaluateView(TemplateView):
 			return redirect("/login")
 		context = self.get_context_data(**kwargs)
 		form = ProfessorEvaluateForm(request.POST)
-
+		form.fields['course'].queryset = Course.objects.filter(professor = request.user)
 		if form.is_valid():
 			new_evaluation = form.save()
 
 			context["form"] = form
 			context["success"] = "Evaluation created"
 		else:
+			
 			context["form"] = form
 			context["error"] = "Evaluation failed"
 		return self.render_to_response(context)
@@ -69,8 +70,6 @@ class StudentChoicesView(TemplateView):
 		
 		return redirect("/choices")
 
-		return self.render_to_response(context)
-
 	def get(self,request, *args, **kwargs):
 		if not request.user.is_authenticated():
 			return redirect("/login")
@@ -95,6 +94,7 @@ class AddGroupView(TemplateView):
 			return redirect("/login")
 		context = self.get_context_data(**kwargs)
 		form = AddGroupForm(request.POST)
+		form.fields['evaluation'].queryset = Evaluation.objects.filter(course= request.session['course_id'])
 
 		if form.is_valid():
 			new_group = form.save()
@@ -104,6 +104,7 @@ class AddGroupView(TemplateView):
 		else:
 			context["form"] = form
 			context["error"] = "Group failed"
+
 		return self.render_to_response(context)
 
 	def get(self, request, *args, **kwargs):
