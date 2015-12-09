@@ -1,1 +1,1 @@
-web: gunicorn informes.wsgi -b 0.0.0.0:$PORT
+web: gunicorn evaluation_system.wsgi -b 0.0.0.0:$PORT
