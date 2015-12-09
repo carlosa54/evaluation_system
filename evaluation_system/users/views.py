@@ -7,6 +7,7 @@ from django import forms
 from django.shortcuts import redirect
 from .models import User
 from ..course.models import Course
+from ..evaluation.models import Group_User, Group
 
 
 def user_logout(request):
@@ -44,6 +45,10 @@ class AddStudentView(TemplateView):
 		if form.is_valid():
 			new_user = form.save()
 
+			grp = Group.objects.get(pk = request.POST['group'])
+
+			link = Group_User(student = new_user, group = grp)
+			link.save()
 			context["form"] = form
 			context["success"] = "Student created"
 		else:
@@ -59,6 +64,10 @@ class AddStudentView(TemplateView):
 		context = self.get_context_data(**kwargs)
 		context["curso"] = Course.objects.filter(pk= request.session['course_id'])[0].name
 
+		groups = Group.objects.filter(evaluation = request.session['eva_id']).order_by('name')
+		context["groups"] =  groups
+
+		print groups
 		form = UserCreationForm()
 		form.fields['type'].widget = forms.HiddenInput()
 

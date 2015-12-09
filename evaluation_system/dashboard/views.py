@@ -31,9 +31,13 @@ class SetCourseDashboardView(TemplateView):
 			return redirect("/login")		
 		context = self.get_context_data(**kwargs)
 
-		if kwargs['course_id']:
+		if 'course_id' in kwargs:
 			request.session['course_id'] = kwargs['course_id']
-			return redirect("/evaluate")
+		if 'eva_id' in kwargs:
+			request.session['eva_id'] = kwargs['eva_id']
+
+		return redirect("/evaluate")
+
 
 
 

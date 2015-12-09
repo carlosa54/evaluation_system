@@ -5,7 +5,20 @@
 	<h3>Escoga el curso</h3>
   <ul class="nav nav-pills nav-stacked text-center">
   	{% for course in courses %}
-    <li><a href="/dashboard/{{course.id}}">{{course}}</a></li>
+  	<!-- Split button -->
+<div class="btn-group">
+  <a class= "btn btn-default"href="/dashboard/{{course.id}}">{{course}}</a>
+  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <span class="caret"></span>
+    <span class="sr-only">Toggle Dropdown</span>
+  </button>
+  <ul class="dropdown-menu">
+    {% for eva in course.evaluation_set.all %}
+    <li><a href="/dashboard/{{course.id}}/{{eva.id}}">{{eva}}</a></li>
+    {% endfor %}
+  </ul>
+</div>
+  	
     {% endfor %}
   </ul>
 </nav>
