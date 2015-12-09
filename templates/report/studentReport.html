@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% block content %}
+{% if error %}
+    <div class="alert alert-dismissable alert-danger">
+        <button type="button" class="close" ><a href="/choices">×</a></button>
+        <strong>Oh snap!</strong> {{ error }}
+    </div>
+{% else %}
+
+
+<center><h1>Reporte del Estudiante<h1></center>
+<legend></legend>
+<div class="jumbotron">
+	<div class="container">
+		<div class="head">
+			<div class="col-sm-8">
+				<p>Cursos</p>
+			</div>
+
+			<div class="col-sm-2">
+				<p>Puntuacion</p>
+			</div>
+		</div>
+	<legend></legend>
+	<div >
+		{% for gr in group %}
+			<div class="col-sm-8" >
+				<h3 class="">{{gr.group.evaluation.course}}</h3>		
+			</div>
+			<div class="col-sm-2" >
+				<center>
+					{% if gr.score == "0/0" %}
+					<h4>No score yet, try again later!</h4>
+					{% else%}
+					<h4>{{gr.score}}</h4>
+					{% endif %}
+				</center>
+			</div>
+		{% endfor %}
+	</div>
+</div>
+</div>
+{% endif %}
+
+{% endblock%}

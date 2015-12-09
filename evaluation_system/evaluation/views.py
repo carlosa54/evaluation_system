@@ -17,13 +17,14 @@ class ProfessorEvaluateView(TemplateView):
 			return redirect("/login")
 		context = self.get_context_data(**kwargs)
 		form = ProfessorEvaluateForm(request.POST)
-
+		form.fields['course'].queryset = Course.objects.filter(professor = request.user)
 		if form.is_valid():
 			new_evaluation = form.save()
 
 			context["form"] = form
 			context["success"] = "Evaluation created"
 		else:
+			
 			context["form"] = form
 			context["error"] = "Evaluation failed"
 		return self.render_to_response(context)
@@ -59,12 +60,15 @@ class StudentChoicesView(TemplateView):
 		for name, value in request.POST.items():
 			if name.startswith('question_'):
 				prop = name.split('_')
-				test = Question.objects.get(pk = prop[1])
+				que = Question.objects.get(pk = prop[1])
 				eva = Evaluation.objects.get(pk = request.POST['evaluation'])
-				ans = Answer(evaluation_id = eva.id ,question = test, score = value, student = request.user.id, student_evaluated = request.POST['student'])
+				ans = Answer(evaluation_id = eva.id ,question = que, score = value, student = request.user.id, student_evaluated = request.POST['student'])
 				ans.save()
-
-		return self.render_to_response(context)
+				stud = Group_User.objects.get(student = request.POST['student'], group__evaluation = eva.id)
+				stud.done = True
+				stud.save()
+		
+		return redirect("/choices")
 
 	def get(self,request, *args, **kwargs):
 		if not request.user.is_authenticated():
@@ -78,7 +82,7 @@ class StudentChoicesView(TemplateView):
 
 	def get_course_and_groups(self, user, context):
 		groups = Group.objects.filter(students = user)
-
+		
 		context['groups'] = groups
 		return context
 
@@ -90,6 +94,7 @@ class AddGroupView(TemplateView):
 			return redirect("/login")
 		context = self.get_context_data(**kwargs)
 		form = AddGroupForm(request.POST)
+		form.fields['evaluation'].queryset = Evaluation.objects.filter(course= request.session['course_id'])
 
 		if form.is_valid():
 			new_group = form.save()
@@ -99,6 +104,7 @@ class AddGroupView(TemplateView):
 		else:
 			context["form"] = form
 			context["error"] = "Group failed"
+
 		return self.render_to_response(context)
 
 	def get(self, request, *args, **kwargs):
@@ -107,6 +113,7 @@ class AddGroupView(TemplateView):
 		if not request.user.type == "professor":
 			return redirect("/")		
 		context = self.get_context_data(**kwargs)
+		context["curso"] = Course.objects.filter(pk= request.session['course_id'])[0].name
 
 		form = AddGroupForm()
 		#To show only evaluations that are in the professor courses

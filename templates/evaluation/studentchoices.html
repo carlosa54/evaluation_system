@@ -32,7 +32,7 @@
 
             {% for group in groups %}
             {% if not group.done %}
-              <li><a id="{{forloop.counter}}" href="javascript:Show({{forloop.counter}})";>{{group.evaluation.course}} {{group.done}}</a></li>
+              <li><a id="{{forloop.counter}}" href="javascript:Show({{forloop.counter}})";>{{group.evaluation.course}}</a></li>
             {% endif %}
             {% endfor %}
           </ul>

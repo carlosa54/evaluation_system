@@ -13,4 +13,9 @@ urlpatterns = [
         views.SetCourseDashboardView.as_view(), 
 		name='coursedash'
     ),
+    url(
+        r'^dashboard/(?P<course_id>[0-9]+)/(?P<eva_id>[0-9]+)$',
+        views.SetCourseDashboardView.as_view(), 
+        name='evadash'
+    ),
 ]

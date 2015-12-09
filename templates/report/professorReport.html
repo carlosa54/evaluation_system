@@ -1,40 +1,60 @@
 {% extends 'base.html' %}
 
 {% block content %}
+
+<script type="text/javascript" >
+
+    function ShowGroup(counter){
+    	var elements = document.getElementsByClassName("groups" + counter);
+    	$(document).ready(function () { $('[class^="groups"]').hide();}); 
+    	$(document).ready(function () { $('[class^="students"]').hide();}); 
+    	for (var i = 0; i < elements.length; i++) {
+    		console.log(elements[i])
+    		$(document).ready(function () { $(elements[i]).show();});
+    		
+    	};
+
+      
+      console.log(counter)
+    }
+
+    function ShowStudents(counter){
+    	var elements = document.getElementsByClassName("students" + counter);
+    	$(document).ready(function () { $('[class^="students"]').hide();}); 
+    	for (var i = 0; i < elements.length; i++) {
+    		console.log(elements[i])
+    		$(document).ready(function () { $(elements[i]).show();});	
+    	};
+      console.log(counter)
+    }
+
+
+ </script>
+
 <div class="jumbotron">
 	<div class="container">
-
-		<div class="col-sm-4">
+		<div class="col-sm-6">
 			<p>Cursos</p>
-			{% for course in curso %}
-			<select name="" id="input" class="form-control" required="required">
+			<select name="" id="input" class="form-control" required="required" onChange="ShowGroup(this.value)">
 				<option value=""> Selecciona un Curso</option>
-				<option value=""> {{course}}</option>
+				{% for evaluation in evaluations %}
+				<option value="{{evaluation.id}}"> {{evaluation.course}} {{evaluation.seccion}} Semestre {{evaluation.semester}} {{ evaluation.name}}</option>
 			</select>
 			{% endfor %}
 		</div>
 
-		<div class="col-sm-4">
+
+		<div class="col-sm-6"   >
 			<p>Grupos</p>
-						{% for course in curso %}
-						{% for evaluation in course.evaluation_set.all %}
-			<select name="" id="input" class="form-control" required="required">
-				<option value=""> Selecciona un Grupo</option>
-				<option value=""> {{evaluation.groups.all}}</option>
-			</select>
-						{% endfor%}
+			<select name="" id="input" class="form-control" required="required" onchange="ShowStudents(this.value)">
+				<option value="" class="empty"> Selecciona un Grupo</option>
+				{% for evaluation in evaluations %}
+					{% for group in evaluation.groups.all%}
+					<option class="groups{{evaluation.id}}" value="{{evaluation.id}}" style = "Display: none"> {{ group}}</option>
 					{% endfor %}
+				{% endfor %}
+			</select>
 		</div>
-
-		<div class="col-sm-4">
-			<p>Estudiantes</p>
-			<select name="" id="input" class="form-control" required="required">
-				<option value=""> Selecciona un Estudiante</option>
-				<option value=""></option>
-			</select><br>
-			<button type="button" class="btn btn-primary pull-right">Submit</button>
-		</div>
-
 	</div>
 </div>
 
@@ -42,38 +62,33 @@
 	<div class="container">
 		<div class="head">
 			<div class="col-sm-8">
-				<p>Preguntas</p>
+				<h4>Estudiantes</h4>
 			</div>
 
 			<div class="col-sm-2">
-				<p>Puntuacion</p>
-			</div>
-
-			<div class="col-sm-2">
-				<p>Porcentaje</p>
+				<h4>Puntuacion</h4>
 			</div>
 		</div>
-		<legend></legend>
-
-		<div class="body">
-			<div class="col-sm-8">
-				<h4>Pregunta 1</h4>				
-			</div>
-
-			<div class="col-sm-2" >
-				<center>
-					<h4>13/15</h4>
-				</center>
-			</div>
-
-			<div class="col-sm-2">
-				<center>
-					<h4>85%</h4>
-				</center>
-			</div>
-		</div>
-
+	<legend></legend>
+	<div >
+		{% for evaluation in evaluations %}
+			{% for group in evaluation.groups.all%}
+					{% for student in group.group_user_set.all %}
+						<div class="students{{evaluation.id}}" style = "Display: none">
+							<div class="col-sm-8" >
+								<p >{{student.student}} </p>		
+							</div>
+							<div class="col-sm-2" >
+								<center>
+									<p>{{student.score}}</p>
+								</center>
+							</div>
+						</div>
+					{% endfor %}
+			{% endfor %}
+		{% endfor %}
 	</div>
+</div>
 </div>
 
 {% endblock %}
