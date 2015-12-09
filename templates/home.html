@@ -1,10 +1,29 @@
-{% extends 'base.html'%}
 
-
+{% extends 'loginBase.html' %}
+{% load staticfiles %}
 {% block jumbotron %}
-<!-- Main jumbotron for a primary marketing message or call to action -->
-      <div class="jumbotron">
-        <h1>{{ body }}</h1>
-        <p>This is a template showcasing the optional theme stylesheet included in Bootstrap. Use it as a starting point to create something more unique by building on or modifying it.</p>
+      <br><br>
+      <div class="container col-lg-offset-4">
+            <div class="col-lg-2">
+                  <div class="btn btn-default">
+                        <a href="{% url 'studentchoices' %}">
+                              <img src="{% static 'img/evaluation.png' %}" class="img-responsive" alt="Image" id="imgEva">
+                              <h3>Evaluar</h3>
+                        </a>
+                  </div>
+                  <br><br>  
+            </div>
+           <div class="col-lg-2">
+                  <div class="btn btn-default">
+                        <a href="{% url 'studentreport' %}">
+                              <img src="{% static 'img/report.png' %}" class="img-responsive" alt="Image" id="imgEva">
+                              <h3>Reportes</h3>
+                        </a>
+                  </div>
+            </div>
       </div>
+ {% endblock %}
+
+{% block extra_css %}
+        <link rel="stylesheet" href="{% static 'css/home.css' %}">
 {% endblock %}
