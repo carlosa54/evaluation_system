@@ -39,8 +39,9 @@
 				<option value=""> Selecciona un Curso</option>
 				{% for evaluation in evaluations %}
 				<option value="{{evaluation.id}}"> {{evaluation.course}} {{evaluation.seccion}} Semestre {{evaluation.semester}} {{ evaluation.name}}</option>
+				{% endfor %}
 			</select>
-			{% endfor %}
+			
 		</div>
 
 
