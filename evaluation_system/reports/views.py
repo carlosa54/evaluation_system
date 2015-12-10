@@ -15,7 +15,7 @@ class showProfessorReport(TemplateView):
 			return redirect("/")		
 		context = self.get_context_data(**kwargs)
 
-		context["evaluations"] = Evaluation.objects.filter(course__professor = request.user)
+		context["evaluations"] = Evaluation.objects.filter(course__professor = request.user, created_by = request.user.id)
 
 
 		return self.render_to_response(context)
