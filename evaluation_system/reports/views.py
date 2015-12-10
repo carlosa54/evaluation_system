@@ -34,7 +34,7 @@ class showStudentReport(TemplateView):
 
 		context["group"] = group
 
-		if True:
+		if not group:
 			context['error'] = "You're not assigned to any courses"
 
 

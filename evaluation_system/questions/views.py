@@ -37,7 +37,7 @@ class AddQuestionView(TemplateView):
 		form = AddQuestionForm()
 		
 		
-		form.fields['evaluation'].queryset = Evaluation.objects.filter(course= request.session['course_id'])
+		form.fields['evaluation'].queryset = Evaluation.objects.filter(course= request.session['course_id'], created_by = request.user.id)
 
 		context['form'] = form
 		return self.render_to_response(context)
