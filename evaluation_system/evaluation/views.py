@@ -19,7 +19,9 @@ class ProfessorEvaluateView(TemplateView):
 		form = ProfessorEvaluateForm(request.POST)
 		form.fields['course'].queryset = Course.objects.filter(professor = request.user)
 		if form.is_valid():
-			new_evaluation = form.save()
+			new_evaluation = form.save(commit=False)
+			new_evaluation.created_by = request.user.id
+			form.save()
 
 			context["form"] = form
 			context["success"] = "Evaluation created"
@@ -36,8 +38,6 @@ class ProfessorEvaluateView(TemplateView):
 			return redirect("/")		
 		context = self.get_context_data(**kwargs)
 		
-		
-		context["curso"] = Course.objects.filter(pk= request.session['course_id'])[0].name
 
 		form = ProfessorEvaluateForm()
 
@@ -113,7 +113,6 @@ class AddGroupView(TemplateView):
 		if not request.user.type == "professor":
 			return redirect("/")		
 		context = self.get_context_data(**kwargs)
-		context["curso"] = Course.objects.filter(pk= request.session['course_id'])[0].name
 
 		form = AddGroupForm()
 		#To show only evaluations that are in the professor courses

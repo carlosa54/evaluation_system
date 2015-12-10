@@ -10,7 +10,7 @@ class User(AbstractBaseUser):
 	last_name = models.CharField(max_length=30)
 	type = models.CharField(max_length=20, choices= ACCOUNT_TYPE_CHOICES, default='student')
 	email = models.EmailField(max_length=254, unique=True)
-	student_number = models.CharField(max_length= 11, unique=True, null=True)
+	student_number = models.CharField(max_length= 11, null=True)
 	is_superuser = models.BooleanField(default=False)
 	is_staff = models.BooleanField(default=False)
 	objects = AccountManager()

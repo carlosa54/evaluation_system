@@ -14,7 +14,9 @@
   </button>
   <ul class="dropdown-menu">
     {% for eva in course.evaluation_set.all %}
+    {% if eva.created_by == request.user.id%}
     <li><a href="/dashboard/{{course.id}}/{{eva.id}}">{{eva}}</a></li>
+    {% endif %}
     {% endfor %}
   </ul>
 </div>

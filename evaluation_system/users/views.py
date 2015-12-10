@@ -62,7 +62,6 @@ class AddStudentView(TemplateView):
 		if not request.user.type == "professor":
 			return redirect("/")		
 		context = self.get_context_data(**kwargs)
-		context["curso"] = Course.objects.filter(pk= request.session['course_id'])[0].name
 
 		groups = Group.objects.filter(evaluation = request.session['eva_id']).order_by('name')
 		context["groups"] =  groups

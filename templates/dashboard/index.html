@@ -6,7 +6,7 @@
       <div class="row">
         <div class="col-sm-3 col-md-2 sidebar" id="sideBar">
           <ul class="nav nav-sidebar">
-            <li><h3><a class="" href="{% url 'dashboard' %}">{{ curso }}</a></h3></li>
+            <li><h3><a class="" href="{% url 'dashboard' %}">{{ request.session.course_name }} - {{ request.session.eva_name}}</a></h3></li>
             <li><a href="{% url 'evaluate'%}">Crear Evaluacion<span class="sr-only">(current)</span></a></li>
             <li><a href="{% url 'addcourse'%}">Crear Curso</a></li>
             <li><a href="{% url 'addgroup'%}">Crear Grupo</a></li>

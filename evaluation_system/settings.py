@@ -34,6 +34,8 @@ class Common(Configuration):
 
     ALLOWED_HOSTS = []
 
+    TEMPLATE_CONTEXT_PROCESSORS = ('django.core.context_processors.request', 'django.contrib.auth.context_processors.auth')
+
 
     # Application definition
 

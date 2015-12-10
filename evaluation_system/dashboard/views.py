@@ -1,6 +1,7 @@
 from django.shortcuts import redirect
 from django.views.generic import TemplateView
 from ..course.models import Course
+from ..evaluation.models import Evaluation
 # Create your views here.
 class DashboardView(TemplateView):
 	template_name = "dashboard/courses.html"
@@ -30,12 +31,15 @@ class SetCourseDashboardView(TemplateView):
 		if not request.user.is_authenticated():
 			return redirect("/login")		
 		context = self.get_context_data(**kwargs)
-
+		if 'eva_id' in request.session:
+			del request.session['eva_id']
+			del request.session['eva_name']
 		if 'course_id' in kwargs:
 			request.session['course_id'] = kwargs['course_id']
+			request.session['course_name'] = Course.objects.get(pk= kwargs['course_id']).name
 		if 'eva_id' in kwargs:
 			request.session['eva_id'] = kwargs['eva_id']
-
+			request.session['eva_name'] = Evaluation.objects.get(pk= kwargs['eva_id']).name
 		return redirect("/evaluate")
 
 

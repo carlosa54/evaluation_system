@@ -13,6 +13,7 @@ class Evaluation(models.Model):
 	semester = models.IntegerField()
 	seccion = models.CharField(max_length= 3)
 	questions = models.ManyToManyField(Question, through = "Evaluation_Question")
+	created_by = models.IntegerField(null=True)
 
 	def __unicode__(self):
 		return self.name
