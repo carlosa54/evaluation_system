@@ -18,7 +18,7 @@ class AddCourseView(TemplateView):
 
 			professor_course = Course_User(course = new_course, professor = request.user)
 			professor_course.save()
-
+			return redirect("/dashboard")
 			context["form"] = form
 			context["success"] = "Course created"
 		else:

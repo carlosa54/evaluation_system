@@ -21,6 +21,13 @@ class DashboardView(TemplateView):
 		courses = Course.objects.filter(professor= request.user)
 		context['courses'] = courses
 
+		if 'course_id' in request.session:
+			del request.session['course_id']
+			del request.session['course_name']
+		if 'eva_id' in request.session:
+			del request.session['eva_id']
+			del request.session['eva_name']
+
 
 		#context = self.retrieve_persons(request.user, context)
 		return self.render_to_response(context)

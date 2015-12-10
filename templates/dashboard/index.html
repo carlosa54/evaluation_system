@@ -6,14 +6,20 @@
       <div class="row">
         <div class="col-sm-3 col-md-2 sidebar" id="sideBar">
           <ul class="nav nav-sidebar">
+            {% if not request.session.course_id %}
+            <li><a href="{% url 'addcourse'%}">Crear Curso</a></li>
+            {% else %}
             <li><h3><a class="" href="{% url 'dashboard' %}">{{ request.session.course_name }} - {{ request.session.eva_name}}</a></h3></li>
             <li><a href="{% url 'evaluate'%}">Crear Evaluacion<span class="sr-only">(current)</span></a></li>
-            <li><a href="{% url 'addcourse'%}">Crear Curso</a></li>
+            
             <li><a href="{% url 'addgroup'%}">Crear Grupo</a></li>
             {% if request.session.eva_id %}
             <li><a href="{% url 'addstudent'%}">Crear Estudiante</a></li>
             {% endif %}
             <li><a href="{% url 'addquestion'%}">Crear Preguntas</a></li>
+            
+            {% endif %}
+            
           </ul>
         </div>
 
