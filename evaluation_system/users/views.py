@@ -41,6 +41,7 @@ class AddStudentView(TemplateView):
 			return redirect("/login")
 		context = self.get_context_data(**kwargs)
 		form = UserCreationForm(request.POST)
+		form.fields['type'].widget = forms.HiddenInput()
 
 		if form.is_valid():
 			new_user = form.save()
