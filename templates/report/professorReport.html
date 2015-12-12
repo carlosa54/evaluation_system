@@ -51,7 +51,7 @@
 				<option value="" class="empty"> Selecciona un Grupo</option>
 				{% for evaluation in evaluations %}
 					{% for group in evaluation.groups.all%}
-					<option class="groups{{evaluation.id}}" value="{{evaluation.id}}" style = "Display: none"> {{ group}}</option>
+					<option class="groups{{group.id}}" value="{{group.id}}" style = "Display: none"> {{ group}}</option>
 					{% endfor %}
 				{% endfor %}
 			</select>
