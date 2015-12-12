@@ -75,7 +75,7 @@
 		{% for evaluation in evaluations %}
 			{% for group in evaluation.groups.all%}
 					{% for student in group.group_user_set.all %}
-						<div class="students{{evaluation.id}}" style = "Display: none">
+						<div class="students{{student.group.id}}" style = "Display: none">
 							<div class="col-sm-8" >
 								<p >{{student.student}} </p>		
 							</div>
