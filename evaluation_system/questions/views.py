@@ -3,6 +3,7 @@ from django.shortcuts import redirect
 from .forms import AddQuestionForm
 from ..evaluation.models import Evaluation, Evaluation_Question
 from ..course.models import Course
+from django import forms
 
 # Create your views here.
 class AddQuestionView(TemplateView):
@@ -13,6 +14,9 @@ class AddQuestionView(TemplateView):
 			return redirect("/login")
 		context = self.get_context_data(**kwargs)
 		form = AddQuestionForm(request.POST)
+		form.fields['evaluation'].queryset = Evaluation.objects.filter(course= request.session['course_id'], created_by = request.user.id)
+		form.fields['evaluation'].initial = request.session['eva_id']
+		form.fields['evaluation'].widget = forms.HiddenInput()
 
 		if form.is_valid():
 			new_question = form.save()
@@ -38,6 +42,7 @@ class AddQuestionView(TemplateView):
 		
 		
 		form.fields['evaluation'].queryset = Evaluation.objects.filter(course= request.session['course_id'], created_by = request.user.id)
-
+		form.fields['evaluation'].initial = request.session['eva_id']
+		form.fields['evaluation'].widget = forms.HiddenInput()
 		context['form'] = form
 		return self.render_to_response(context)
