@@ -66,6 +66,8 @@ class Group_User(models.Model):
 	group = models.ForeignKey(Group)
 	student = models.ForeignKey(User, limit_choices_to= {'type':'student'})
 	done = models.BooleanField(default = False)
+	class Meta:
+		unique_together = ("group", "student")
 	def __unicode__(self):
 		return self.group.name
 
