@@ -14,17 +14,41 @@
 {% endif %}
 <h1 class= "page-header">Añadir Estudiante</h1>
 <div class = "jumbotron">
+
+
+
 <form method="post" action="{% url 'addstudent' %}" class="form-horizontal"> {% csrf_token %}
     <div class="form-group">
-    <label>Escoga el grupo:</label>
+    <legend>Añadir un estudiante</legend>
+    <label>Escoja un Estudiante</label>
+    <select style="width:100%; height:25px" name="group">
+        {% for group in groups %}
+            {% for student in group.group_user_set.all%}
+            <option value="{{group.id}}">{{student.student}}</option>
+            {% endfor %}
+        {% endfor %}
+    </select>
+    </div>
+     <input type="submit" value="Submit" class="btn btn-default pull-right">
+</form>
+
+
+
+
+    <br>
+    <br>
+<form method="post" action="{% url 'addstudent' %}" class="form-horizontal"> {% csrf_token %}
+    <div class="form-group">
+    <legend>Crear un estudiante</legend>
+    <label>Escoja el grupo:</label>
     <select style="width:100%; height:25px" name="group">
         {% for group in groups %}
         <option value="{{group.id}}">{{group}}</option>
         {% endfor %}
     </select>
-</div>
+    </div>
 	{{form|crispy}}
-	<input type="submit" value="Submit" class="btn btn-default">
+	<input type="submit" value="Submit" class="btn btn-default pull-right">
 </form>
 </div>
 {% endblock %} 
