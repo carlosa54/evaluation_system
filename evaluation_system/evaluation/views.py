@@ -7,6 +7,7 @@ from .models import Group_User, Group, Evaluation
 from ..users.models import User
 from ..questions.models import Question, Answer
 from django import template
+from django import forms
 
 # Create your views here.
 class ProfessorEvaluateView(TemplateView):
@@ -18,6 +19,8 @@ class ProfessorEvaluateView(TemplateView):
 		context = self.get_context_data(**kwargs)
 		form = ProfessorEvaluateForm(request.POST)
 		form.fields['course'].queryset = Course.objects.filter(professor = request.user)
+		form.fields['course'].initial = request.session['course_id']
+		form.fields['course'].widget = forms.HiddenInput()
 		if form.is_valid():
 			new_evaluation = form.save(commit=False)
 			new_evaluation.created_by = request.user.id
@@ -42,6 +45,8 @@ class ProfessorEvaluateView(TemplateView):
 		form = ProfessorEvaluateForm()
 
 		form.fields['course'].queryset = Course.objects.filter(professor = request.user)
+		form.fields['course'].initial = request.session['course_id']
+		form.fields['course'].widget = forms.HiddenInput()
 
 		context['form'] = form
 
@@ -65,7 +70,6 @@ class StudentChoicesView(TemplateView):
 				ans = Answer(evaluation_id = eva.id ,question = que, score = value, student = request.user.id, student_evaluated = request.POST['student'])
 				ans.save()
 				stud = Group_User.objects.get(student = request.POST['student'], group__evaluation = eva.id)
-				stud.done = True
 				stud.save()
 		
 		return redirect("/choices")
@@ -95,6 +99,8 @@ class AddGroupView(TemplateView):
 		context = self.get_context_data(**kwargs)
 		form = AddGroupForm(request.POST)
 		form.fields['evaluation'].queryset = Evaluation.objects.filter(course= request.session['course_id'])
+		form.fields['evaluation'].initial = request.session['eva_id']
+		form.fields['evaluation'].widget = forms.HiddenInput()
 
 		if form.is_valid():
 			new_group = form.save()
@@ -117,6 +123,8 @@ class AddGroupView(TemplateView):
 		form = AddGroupForm()
 		#To show only evaluations that are in the professor courses
 		form.fields['evaluation'].queryset = Evaluation.objects.filter(course= request.session['course_id'])
+		form.fields['evaluation'].initial = request.session['eva_id']
+		form.fields['evaluation'].widget = forms.HiddenInput()
 
 		context['form'] = form
 		return self.render_to_response(context)

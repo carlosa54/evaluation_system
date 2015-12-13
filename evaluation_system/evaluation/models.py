@@ -66,6 +66,8 @@ class Group_User(models.Model):
 	group = models.ForeignKey(Group)
 	student = models.ForeignKey(User, limit_choices_to= {'type':'student'})
 	done = models.BooleanField(default = False)
+	class Meta:
+		unique_together = ("group", "student")
 	def __unicode__(self):
 		return self.group.name
 
@@ -80,7 +82,9 @@ class Group_User(models.Model):
 					totalque += 1
 		return str(sum) + '/' + str(totalque * 5)
 
-		
+	@property
+	def check_user(self):
+		return self.group.evaluation.questions.all()[0].answer_set.all().filter(student_evaluated = self.student.id)[0].student
 
 
 
