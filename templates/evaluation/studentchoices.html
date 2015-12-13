@@ -10,6 +10,15 @@
     function Show(counter){
       $(document).ready(function () { $('[id^="testDiv"]').hide();}); 
       $(document).ready(function () { $('#testDiv' + counter).show();});
+
+      var elements = document.getElementsByClassName("list");
+      for (var i = 0; i < elements.length; i++) {
+        console.log(elements[i])
+        if (elements[i].options.length ==0){
+
+        $(document).ready(function () { $('#testDiv' + (i +1)).hide();});
+        }
+      };
     }
   </script>
 
@@ -48,17 +57,21 @@
 
       <form action="{% url 'studentchoices' %}" method="POST" role="form" > {% csrf_token %}
 
-        <div id= "testDiv{{forloop.counter}}" style = "Display: none">
-      <select class="form-control" name = "student" >
+        <div id= "testDiv{{forloop.counter}}" style = "Display: none"> 
+          <div class="form-control">
+      <select class="list" name = "student" >
         {% for student in group.group_user_set.all %}
         {% if not student.done %}
-        {% if not student.check_user == request.user.id %}        
+        {% if not student.check_user == request.user.id %}  
+        {% if not request.user.id == student.student.id %}      
             <option name= "student" value = "{{student.student.id}}"> {{ student.student }}  </option>
+        {% endif%}
         {% endif %}
         {% endif %}
         {% endfor %}
 
       </select>
+    </div>
         <legend>Preguntas </legend>
 
           {% for que in group.evaluation.questions.all %}
