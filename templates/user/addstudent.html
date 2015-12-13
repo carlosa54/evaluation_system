@@ -3,7 +3,7 @@
 {% if error %}
     <div class="alert alert-dismissable alert-danger">
         <button type="button" class="close" data-dismiss="alert">×</button>
-        <strong>Oh snap!</strong> {{ errors }}
+        <strong>Oh snap!</strong> {{ error }}
     </div>
 {% endif %}
 {% if success %}
@@ -20,19 +20,21 @@
 <form method="post" action="{% url 'addstudent' %}" class="form-horizontal"> {% csrf_token %}
     <div class="form-group">
     <legend>Añadir un estudiante</legend>
-    <label>Escoja un Estudiante</label>
-    <select style="width:100%; height:25px" name="group">
+    <label>Escoja el grupo:</label>
+    <select style="width:100%; height:25px" name="grouplink">
         {% for group in groups %}
-            {% for student in group.group_user_set.all%}
-            <option value="{{group.id}}">{{student.student}}</option>
-            {% endfor %}
+        <option value="{{group.id}}">{{group}}</option>
+        {% endfor %}
+    </select>
+    <label>Escoja un Estudiante</label>
+    <select style="width:100%; height:25px" name="student">
+        {% for student in students %}
+            <option value="{{student.id}}">{{student}}</option>
         {% endfor %}
     </select>
     </div>
      <input type="submit" value="Submit" class="btn btn-default pull-right">
 </form>
-
-
 
 
     <br>
