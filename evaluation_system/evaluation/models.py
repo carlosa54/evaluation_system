@@ -80,7 +80,9 @@ class Group_User(models.Model):
 					totalque += 1
 		return str(sum) + '/' + str(totalque * 5)
 
-		
+	@property
+	def check_user(self):
+		return self.group.evaluation.questions.all()[0].answer_set.all().filter(student_evaluated = self.student.id)[0].student
 
 
 

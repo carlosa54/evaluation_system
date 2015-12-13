@@ -52,12 +52,14 @@
       <select class="form-control" name = "student" >
         {% for student in group.group_user_set.all %}
         {% if not student.done %}
+        {% if not student.check_user == request.user.id %}        
             <option name= "student" value = "{{student.student.id}}"> {{ student.student }}  </option>
+        {% endif %}
         {% endif %}
         {% endfor %}
 
       </select>
-        <legend>Preguntas</legend>
+        <legend>Preguntas </legend>
 
           {% for que in group.evaluation.questions.all %}
             <div class="form-group">

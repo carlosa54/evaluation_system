@@ -65,7 +65,6 @@ class StudentChoicesView(TemplateView):
 				ans = Answer(evaluation_id = eva.id ,question = que, score = value, student = request.user.id, student_evaluated = request.POST['student'])
 				ans.save()
 				stud = Group_User.objects.get(student = request.POST['student'], group__evaluation = eva.id)
-				stud.done = True
 				stud.save()
 		
 		return redirect("/choices")
